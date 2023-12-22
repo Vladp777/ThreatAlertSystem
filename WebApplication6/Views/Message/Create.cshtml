@@ -1,0 +1,89 @@
+﻿@model ThreadAlert.DTOs.CreateMessage
+@using ThreadAlert.Entities
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Message</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Список небезпечних об'єктів -->
+                    <div class="form-group">
+                        <label asp-for="DangerousObjectId" class="control-label"></label>
+                        <select asp-for="DangerousObjectId" class="form-control" asp-items="@(new SelectList(ViewBag.DangerousObjects, "Id", "Name"))"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- Кнопка для створення нового небезпечного об'єкту -->
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" onclick="openCreateDangerousObjectWindow()"> New...</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTime" class="control-label"></label>
+                <input asp-for="DateTime" class="form-control" value="@DateTime.Now.ToString("dd-MM-yyyyTHH:mm:ss")" />
+                <span asp-validation-for="DateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Priority" class="control-label"></label>
+                <select asp-for="Priority" class="form-control">
+                    @foreach (var priority in Enum.GetValues(typeof(Priority)))
+                    {
+                        <option value="@priority">@priority</option>
+                    }
+                </select>
+                <span asp-validation-for="Priority" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function openCreateDangerousObjectWindow() {
+            // Задайте URL вашого перегляду для створення нового небезпечного об'єкту
+            var url = '/DangerousObject/Create';
+
+            // Відкрийте нове вікно браузера з заданим URL
+            window.open(url, '_blank');
+        }
+    </script>
+}
+

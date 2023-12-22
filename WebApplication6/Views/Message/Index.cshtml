@@ -1,0 +1,109 @@
+﻿@model IEnumerable<ThreadAlert.Entities.Message>
+
+@{
+    ViewData["Title"] = "Admin panel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Admin Panel</h1>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    td a {
+        display: inline-block;
+        padding: 6px 10px;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-right: 5px;
+    }
+
+    .active-yes {
+    }
+
+    .active-no {
+        opacity: 0.5; /* Adjust the opacity as needed */
+    }
+</style>
+
+<div>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</div>
+<div>
+
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DangerousObject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActived)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Priority)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="@(item.IsActived ? "active-yes" : "active-no")">
+                <td>
+                    @Html.DisplayFor(modelItem => item.DangerousObject.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActived)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Priority)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
